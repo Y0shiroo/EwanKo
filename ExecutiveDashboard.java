@@ -1,147 +1,124 @@
 import java.awt.EventQueue;
-import java.awt.Font;
-
 import javax.swing.JFrame;
-import javax.swing.JButton;
-import java.awt.Color;
-import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JScrollPane;
-import java.io.File;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Map;
-import java.util.HashMap;
-import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JCheckBox;
+import java.awt.Font;
 
-public class ExecutiveDashboard {
+public class AdminLogin extends JFrame {
 
-    public JFrame ExecutiveDashboard;
-    
-    //Added Positions
-    private DefaultTableModel model;
-    private JTable dash_table;
-    
-    //Applicant Count
-    private DefaultTableModel model2;
-    private JPanel AppCount;
-    
-    private Map<String, Integer> applicantCounts = new HashMap<String, Integer>();
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ExecutiveDashboard window = new ExecutiveDashboard();
-					window.ExecutiveDashboard.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+    private JPanel contentPane;
+    private JTextField AdminUser;
+    private JPasswordField AdminPass;
+    private JButton btn_Login;
+    private JButton BackButton;
 
-	/**
-	 * Create the application.
-	 */
-    public ExecutiveDashboard() {
-        initialize();
-    }
-    public JTable getTable() {
-        return dash_table;
+    /**
+     * Launch the application.
+     */
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    AdminLogin frame = new AdminLogin();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /**
-     * Initialize the contents of the frame.
+     * Create the frame.
      */
-    private void initialize() {
-    	ExecutiveDashboard = new JFrame();
-    	ExecutiveDashboard.setBounds(100, 100, 1026, 645);
-    	ExecutiveDashboard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	ExecutiveDashboard.setLocationRelativeTo(null);
-    	ExecutiveDashboard.getContentPane().setLayout(null);
+    public AdminLogin() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 1026, 645);
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
+        setLocationRelativeTo(null);
 
+        //TEXT FIELDS ====================================================================================
         
-        // Tables ====================================================================================
-
-	    // Added Positions
-        model = new DefaultTableModel();
-	    
-        JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBounds(36, 115, 484, 386);
-        ExecutiveDashboard.getContentPane().add(scrollPane);
+        AdminUser = new JTextField();
+        AdminUser.setBounds(717, 297, 257, 43);
+        contentPane.add(AdminUser);
+        AdminUser.setColumns(10);
         
-        dash_table = new JTable();
-        scrollPane.setViewportView(dash_table);
-        dash_table.setModel(model);       
-        dash_table.setShowGrid(true);
-        dash_table.setShowHorizontalLines(true);
-        dash_table.setGridColor(Color.black);   
-        dash_table.setEnabled(false);
-        dash_table.setFocusable(false);
-        dash_table.setRowSelectionAllowed(false);
-        dash_table.getTableHeader().setReorderingAllowed(false);
-        dash_table.getTableHeader().setResizingAllowed(false);
-        dash_table.setFont(new Font("Arial", Font.PLAIN, 12));
-        Object[] column = {"       Position Code","          Job Title", "    Responsibilities", "            Salary"};
-        model.setColumnIdentifiers(column);
-        final Object[] row = new Object[4];
-        model.setColumnIdentifiers(column);      
-        scrollPane.setViewportView(dash_table);
-
-	    
-	    // Applicant Count 
-        model2 = new DefaultTableModel();
-
-	    AppCount = new JPanel();
-        AppCount.setBounds(578, 115, 400, 386);
-        AppCount.setBackground(Color.WHITE);
-        ExecutiveDashboard.getContentPane().add(AppCount);
-        AppCount.setLayout(null);
-
-
-        // BUTTONS ====================================================================================
-
-        //Job Posting Button
-        JButton btn_JobPosting = new JButton("");
-        btn_JobPosting.addActionListener(new ActionListener() {
+        AdminPass = new JPasswordField();
+        AdminPass.setBounds(717, 367, 257, 43);
+        contentPane.add(AdminPass);
+        
+        JCheckBox showHideButton = new JCheckBox("Show Password");
+        showHideButton.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
+        showHideButton.setBounds(860, 346, 114, 23);
+        showHideButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Job_Posting JobPosting = new Job_Posting(dash_table, getTable());
-                JobPosting.JobPosting.setVisible(true);
-                ExecutiveDashboard.dispose();
+                if (showHideButton.isSelected()) {
+                    AdminPass.setEchoChar((char) 0);
+                } else {
+                    AdminPass.setEchoChar('•');
+                }
             }
         });
-        btn_JobPosting.setIcon(new ImageIcon(" "));
-        btn_JobPosting.setBackground(new Color(11, 20, 10));
-        btn_JobPosting.setBounds(873, 54, 116, 40);
-        ExecutiveDashboard.getContentPane().add(btn_JobPosting);
+        contentPane.add(showHideButton);
 
-        //Log Out Button
-        JButton btn_LogOut = new JButton("");
-        btn_LogOut.addActionListener(new ActionListener() {
+        //BUTTONS ====================================================================================
+        
+        btn_Login = new JButton(new ImageIcon(" "));
+        btn_Login.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Admin_Log AdminLog = new Admin_Log();
-                AdminLog.setVisible(true);
-                ExecutiveDashboard.dispose();
+                String username = AdminUser.getText();
+                String password = new String(AdminPass.getPassword());
+                
+                if (username.equals("NCProjectsAdmin") && password.equals("Admin2023")){ 
+					AdminUser.setText(null);
+					AdminPass.setText(null);
+		            JOptionPane.showMessageDialog(null, "Login Successfully!");
+					ExecutiveDashboard ExecutiveDash = new ExecutiveDashboard();
+					ExecutiveDash.ExecutiveDashboard.setVisible(true);
+					dispose();			              
+		          
+		      } else if(username.isEmpty() && password.isEmpty()){  
+		    	  JOptionPane.showMessageDialog(null, "Enter Username and Password!");
+		      } else if(username.equals("NCVAProjectsAdmin") && !password.equals("Admin2024")){
+		    	  JOptionPane.showMessageDialog(null, "Invalid Password!");
+		      } else if(!username.equals("NCVAProjectsAdmin") && password.equals("Admin2024")){
+		    	  JOptionPane.showMessageDialog(null, "Invalid Username!");
+		      } else if(!username.equals("NCVAProjectsAdmin") && !password.equals("Admin2024")){
+		    	  JOptionPane.showMessageDialog(null, "Invalid Username and Password!");  
+		      }		
+		}
+	});
+        btn_Login.setBounds(758, 440, 139, 40);
+        contentPane.add(btn_Login);
+
+        BackButton = new JButton(new ImageIcon(" "));
+        BackButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                HomePage homePage = new HomePage();
+                homePage.setVisible(true);
+                dispose();
             }
         });
-        btn_LogOut.setIcon(new ImageIcon(" "));
-        btn_LogOut.setBounds(731, 54, 116, 40);
-        ExecutiveDashboard.getContentPane().add(btn_LogOut);
+        BackButton.setBounds(729, 0, 139, 40);
+        contentPane.add(BackButton);
 
-        // BACKGROUND====================================================================================
-
-        JLabel ExecutiveDash_BG = new JLabel("");
-        ExecutiveDash_BG.setIcon(new ImageIcon("C:\\Users\\Marc Cadiz\\eclipse-workspace\\FinalUI\\ADMIN\\ExecDash.png"));
-        ExecutiveDash_BG.setBounds(0, 0, 1026, 617);
-        ExecutiveDash.getContentPane().add(ExecutiveDash_BG);
+        //BACKGROUND====================================================================================
+        
+        JLabel lbl_AdminLogBG = new JLabel(new ImageIcon("C:\\Users\\Marc Cadiz\\eclipse-workspace\\FinalUI\\ADMIN\\AdminLogin.png"));
+        lbl_AdminLogBG.setBounds(0, 0, 1026, 617);
+        contentPane.add(lbl_AdminLogBG);
     }
 }
