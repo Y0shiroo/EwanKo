@@ -83,6 +83,12 @@ public class HomePage extends JFrame {
 		
 		
 		JButton Register = new JButton("New button");
+		Admin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				dispose();
+			}
+		});
 		Register.setIcon(new ImageIcon(" "));
 		Register.setBounds(1018, 83, 102, 41);
 		HomePage.add(Register);
@@ -91,8 +97,7 @@ public class HomePage extends JFrame {
 		Admin = new JButton("New button");
 		Admin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AdminLogin AdminLoginFrame = new AdminLogin(null, null);
-				AdminLoginFrame.AdminLogin.setVisible(true);
+
 				dispose();
 			}
 		});
