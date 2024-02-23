@@ -86,17 +86,17 @@ public class AdminLogin extends JFrame {
 					AdminUser.setText(null);
 					AdminPass.setText(null);
 		            JOptionPane.showMessageDialog(null, "Login Successfully!");
-					Executive_Dash ExecutiveDash = new Executive_Dash();
-					ExecutiveDash.ExecutiveDash.setVisible(true);
+					ExecutiveDashboard ExecutiveDash = new ExecutiveDashboard();
+					ExecutiveDash.ExecutiveDashboard.setVisible(true);
 					dispose();			              
 		          
 		      } else if(username.isEmpty() && password.isEmpty()){  
 		    	  JOptionPane.showMessageDialog(null, "Enter Username and Password!");
-		      } else if(username.equals("NCProjectsAdmin") && !password.equals("Admin2023")){
+		      } else if(username.equals("NCVAProjectsAdmin") && !password.equals("Admin2024")){
 		    	  JOptionPane.showMessageDialog(null, "Invalid Password!");
-		      } else if(!username.equals("NCProjectsAdmin") && password.equals("Admin2023")){
+		      } else if(!username.equals("NCVAProjectsAdmin") && password.equals("Admin2024")){
 		    	  JOptionPane.showMessageDialog(null, "Invalid Username!");
-		      } else if(!username.equals("NCProjectsAdmin") && !password.equals("Admin2023")){
+		      } else if(!username.equals("NCVAProjectsAdmin") && !password.equals("Admin2024")){
 		    	  JOptionPane.showMessageDialog(null, "Invalid Username and Password!");  
 		      }		
 		}
@@ -107,10 +107,9 @@ public class AdminLogin extends JFrame {
         BackButton = new JButton(new ImageIcon(" "));
         BackButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Assuming you have a HomePage class that you want to go back to
                 HomePage homePage = new HomePage();
                 homePage.setVisible(true);
-                dispose(); // Close current window
+                dispose();
             }
         });
         BackButton.setBounds(729, 0, 139, 40);
